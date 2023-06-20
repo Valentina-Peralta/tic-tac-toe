@@ -38,8 +38,29 @@ p {
   text-align: center;
   border: none;
   background-color: transparent;
+}
 
+.status {
+  font-size: 2rem;
+}
 
+.alert {
+  font-size: 2.5rem;
+  animation: 1s pulse infinite
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 
@@ -123,4 +144,94 @@ p {
   transform: translateY(-50%);
   width: 360px;
   height: 360px;
+}
+
+/*WINNING LINES*/
+
+.diag-2 {
+  position: relative;
+  top: -50px;
+  stroke-dasharray: 570;
+  animation: .3s fillDiagonal linear;
+
+
+}
+
+.diag-1 {
+  position: relative;
+  top: 0px;
+  stroke-dasharray: 570;
+  animation: .3s fillDiagonal linear;
+
+
+}
+
+.vert-1 {
+  position: relative;
+  right: 30px;
+  stroke-dasharray: 420;
+  animation: .3s fillHorizontal linear;
+
+}
+
+.vert-2 {
+  position: relative;
+  left: 100px;
+  stroke-dasharray: 420;
+  animation: .3s fillHorizontal linear;
+
+}
+
+.vert-3 {
+  position: relative;
+  left: 230px;
+  stroke-dasharray: 420;
+  animation: .3s fillHorizontal linear;
+
+}
+
+.hor-1 {
+  position: relative;
+  left: -20px;
+  stroke-dasharray: 420;
+  animation: .3s fillHorizontal linear;
+
+}
+
+.hor-2 {
+  position: relative;
+  left: -20px;
+  top: 110px;
+  stroke-dasharray: 420;
+  animation: .3s fillHorizontal linear;
+
+}
+
+.hor-3 {
+  position: relative;
+  left: -20px;
+  top: 220px;
+  stroke-dasharray: 420;
+  animation: .3s fillHorizontal linear;
+
+}
+
+@keyframes fillHorizontal {
+  0% {
+    stroke-dashoffset: 420;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fillDiagonal {
+  0% {
+    stroke-dashoffset: 570;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
