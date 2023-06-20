@@ -6,7 +6,6 @@ import Square from './Components/Square'
 function App() {
   const [squares, setSquares] = useState(Array(9).fill(null))
   const [isX, setIsX] = useState(true)
-
   const calculateWinner = (squares) => {
     const winningPatterns = [
       [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -15,25 +14,41 @@ function App() {
     ]
     for (let i = 0; i < winningPatterns.length; i++) {
       const [a, b, c] = winningPatterns[i]
-      if (squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a]
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return {
+          winner: squares[a],
+          pattern: winningPatterns[i]
+        }
       }
     }
     return null
-
   }
 
   const handleClick = (i) => {
     if (calculateWinner(squares) || squares[i]) {
       return
     }
-    squares[i] = isX ? 'X' : 'O'
-    setSquares(squares)
+    const newSquares = [...squares]
+    newSquares[i] = isX ? 'X' : 'O'
+    setSquares(newSquares)
     setIsX(!isX)
-    console.log(squares[i])
   }
 
+  const winnerInfo = calculateWinner(squares)
+  let status
+  let winningPattern
+  if (winnerInfo) {
+    status = `Winner: ${winnerInfo.winner}`
+    winningPattern = winnerInfo.pattern
+    console.log(winningPattern)
+  } else {
+    status = `Next player: ${isX ? 'X' : 'O'}`
+  }
 
+  const handleRestart = () => {
+    setIsX(true)
+    setSquares(Array(9).fill(null))
+  }
   return (
 
 
@@ -77,6 +92,11 @@ function App() {
           </div>
         </div>
       </div>
+      <h2 className='status' style={status.includes('X') ? { color: '#c20404' } : { color: '#0A0262' }}>{status}</h2>
+      <svg className='restart' onClick={handleRestart} width="40" height="40" viewBox="0 0 149 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M49 11C58.8868 10.4796 68.6041 7.03253 78.7222 6.5C87.5879 6.03338 99.204 4.05668 108 6.5C122.47 10.5193 128.844 27.885 131.556 41.0556C134.035 53.0979 133.155 65.9476 133 78.2222C132.787 95.081 124.463 109.318 112 120C98.634 131.457 84.6639 141 66.5556 141C60.6477 141 53.0844 140.315 47.5 138.333C42.2657 136.476 38.064 131.901 33.4444 128.944C14.2369 116.652 15 84.3387 15 64.3889C15 57.4817 15.0138 51.1894 16.5556 44.4444C17.1097 42.0201 16.6823 36.9605 19 35.2222C20.0848 34.4086 25 27.3344 25 26C25 25.7785 17.0093 29.6615 15.5 30.5C12.5803 32.1221 2.7711 34 6.11111 34C9.21959 34 14.733 33.0325 17.2222 31.2222C19.2169 29.7716 23.4991 27.8529 26 28C30.2317 28.2489 33 41.7331 33 45" stroke="#035a03" stroke-width="14" stroke-linecap="round" />
+      </svg>
+
       <p>Coded by Valentina Peralta</p>
     </div>)
 }
